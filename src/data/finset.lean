@@ -34,14 +34,14 @@ instance has_decidable_eq [decidable_eq α] : decidable_eq (finset α)
 
 /- membership -/
 
+/-- Membership in `finset`.
+
+Note that the decidability instance is the multiset instance. -/
 instance : has_mem α (finset α) := ⟨λ a s, a ∈ s.1⟩
 
 theorem mem_def {a : α} {s : finset α} : a ∈ s ↔ a ∈ s.1 := iff.rfl
 
 @[simp] theorem mem_mk {a : α} {s nd} : a ∈ @finset.mk α s nd ↔ a ∈ s := iff.rfl
-
-instance decidable_mem [h : decidable_eq α] (a : α) (s : finset α) : decidable (a ∈ s) :=
-multiset.decidable_mem _ _
 
 /- set coercion -/
 
@@ -1025,7 +1025,11 @@ calc s.card = s.attach.card : card_attach.symm
 
 lemma card_union_add_card_inter [decidable_eq α] (s t : finset α) :
   (s ∪ t).card + (s ∩ t).card = s.card + t.card :=
-finset.induction_on t (by simp) (λ a, by by_cases a ∈ s; simp * {contextual := tt})
+finset.induction_on t (by simp) (λ a,
+begin
+  refine classical.by_cases (λh:a∈s, _) (λh:a∉s, _);
+  simp * {contextual := tt},
+end)
 
 lemma card_union_le [decidable_eq α] (s t : finset α) :
   (s ∪ t).card ≤ s.card + t.card :=

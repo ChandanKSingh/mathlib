@@ -634,7 +634,7 @@ multiset.induction_on s rfl
         [simp only [h, count_cons_self, nat.one_add], simp only [count_cons_of_ne h, zero_add]]
       ... = card (a :: s) :
       begin
-        by_cases a ∈ s.to_finset,
+        refine classical.by_cases (λh:a ∈ s.to_finset, _) (λh, _),
         { have : (to_finset s).sum (λx, ite (x = a) 1 0) = (finset.singleton a).sum (λx, ite (x = a) 1 0),
           { apply (finset.sum_subset _ _).symm,
             { intros _ H, rwa mem_singleton.1 H },
