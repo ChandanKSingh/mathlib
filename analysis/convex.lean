@@ -7,7 +7,6 @@ Convex sets and functions on real vector spaces
 -/
 
 import analysis.normed_space.basic
-import algebra.lemmas
 import data.complex.basic
 import data.set.intervals
 import tactic.interactive
@@ -240,14 +239,14 @@ convex_linear_preimage _ _ (is_linear_map.is_linear_map_smul _)
 lemma convex_add : convex A → convex B → convex ((λx : α × α, x.1 + x.2) '' (set.prod A B)) :=
 begin
   intros hA hB,
-  apply convex_linear_image (set.prod A B) (λx : α × α, x.1 + x.2) is_linear_map_add,
+  apply convex_linear_image (set.prod A B) (λx : α × α, x.1 + x.2) is_linear_map.is_linear_map_add,
   exact convex_prod hA hB
 end
 
 lemma convex_sub : convex A → convex B → convex ((λx : α × α, x.1 - x.2) '' (set.prod A B)) :=
 begin
   intros hA hB,
-  apply convex_linear_image (set.prod A B) (λx : α × α, x.1 - x.2) is_linear_map_sub,
+  apply convex_linear_image (set.prod A B) (λx : α × α, x.1 - x.2) is_linear_map.is_linear_map_sub,
   exact convex_prod hA hB
 end
 
