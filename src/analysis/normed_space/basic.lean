@@ -8,7 +8,7 @@ Authors: Patrick Massot, Johannes Hölzl
 
 import algebra.pi_instances
 import linear_algebra.basic
-import topology.instances.nnreal
+import topology.instances.nnreal topology.instances.complex
 variables {α : Type*} {β : Type*} {γ : Type*} {ι : Type*}
 
 noncomputable theory
@@ -308,6 +308,12 @@ instance : normed_field ℝ :=
   norm_mul := abs_mul }
 
 lemma real.norm_eq_abs (r : ℝ): norm r = abs r := rfl
+
+instance : normed_field ℂ :=
+{ norm := complex.abs,
+  dist_eq := λ _ _, rfl,
+  norm_mul := complex.abs_mul,
+  .. complex.discrete_field }
 
 end normed_field
 
